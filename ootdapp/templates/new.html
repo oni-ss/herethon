@@ -1,0 +1,43 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+           
+        #box1{
+            margin-top:120px;
+        }
+        #box2{
+            margin-top:40px;
+        }
+        @font-face { font-family: 'netmarbleB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'netmarbleL'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleL.woff') format('woff'); font-weight: normal; font-style: normal; }
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body background="{%static '15.jpg'%}" style="background-size:1550px;">
+    <div class="container" style="TEXT-ALIGN:center;">
+        <form action="{% url 'create' %}" method="POST" enctype="multipart/form-data">
+            {%csrf_token%}
+            
+            <h4 id="box1" style="font-family: netmarbleL"> - 한줄 소개 - </h4> 
+            <input type="text" name="title">
+            <h4 id="box2" style="font-family: netmarbleL"> - OOTD 사진 -</h4>
+            <input type="file" name="image">
+            <h4 id="box2" style="font-family: netmarbleL"> - OOTD를 설명해주세요💕 - </h4>
+            <textarea cols=40 rows=10 name="body" ></textarea>
+            <br>
+            <br>
+            <input class="btn btn-dark" type="submit" value="제출하기">
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
+</html>

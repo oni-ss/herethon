@@ -1,0 +1,135 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <title>오늘뭐입지? :OOTD</title>
+    <style>
+       #box1{
+            margin-right:400px;
+        }
+        @font-face { font-family: 'netmarbleB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff') format('woff'); font-weight: normal; font-style: normal; }
+        @font-face { font-family: 'netmarbleL'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleL.woff') format('woff'); font-weight: normal; font-style: normal; }
+    </style>
+    <!---API--->
+    <link href="https://fonts.googleapis.com/css?family=Share+Tech+Mono" rel="stylesheet">
+    <link rel="icon" href="http://openweathermap.org/img/wn/10d@2x.png" type="png ">
+</head>
+
+
+<body >
+    <!-------------navbar------------->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <a class="navbar-brand" href="{%url 'main'%}" style="font-family: netmarbleB;">오늘뭐입지? :OOTD</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText" style="font-family: netmarbleL;">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{%url 'main'%}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">My page</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{%url 'create'%}">Write</a>
+            </li>
+
+          </ul>
+          <ul class="navbar-nav mr-auto" style="padding-left:70%;">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <p>{{user.username}}</p>
+              <form action="logout/" method="POST">
+                {% csrf_token %}
+              <input type="submit" value="Log out">
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log in</a>
+            </li>
+          {% endif %}
+          </ul>
+        </div>
+    </nav>
+    <!-------------navbar------------->
+
+    <!-------------weather contents------------->
+    <div class="container" style="padding-top:30px;">
+      <img id="box1" src="{%static 'logo.png'%}" height=150px weight=200px>
+      <div style="display:inline-block;">
+        <p style="font-family: netmarbleB">{{description}}</p>
+        <p style="font-family: netmarbleL">온도: {{c}}</p>
+        <p style="font-family: netmarbleL">습도: {{humidity}}</p>
+      </div>
+      <div style="display:inline-block; padding-left:50px;">
+        <p style="font-family: netmarbleB">{{city_name}}</p>
+        <img src= {{link}}>
+      </div>
+      
+      <hr>
+    </div>
+    <!-------------weather contents------------->
+
+    <!-------------manager contents------------->
+      <div class="container" style="padding-bottom:80px;">
+          <div class="row">
+            <div class="col-md-4">
+                <img class="card-img-top" src="{%static 'fi4.png'%}" >
+                <div class="card-body">
+                  <hr><p class="card-text" style="font-family: 'netmarbleL'; font-size:18px; text-align:center;">더위를 많이 타는 사람</p>
+                </div>
+            </div> 
+
+            <div class="col-md-4">
+              <img class="card-img-top" src="{%static 'fi2.png'%}">
+              <div class="card-body">
+                <hr><p class="card-text" style="font-family: 'netmarbleL'; font-size:18px; text-align:center;">평균 사람</p>
+              </div>
+          </div> 
+
+          <div class="col-md-4">
+            <img class="card-img-top" src="{%static 'fi3.png'%}">
+            <div class="card-body">
+              <hr><p class="card-text" style="font-family: 'netmarbleL'; font-size:18px; text-align:center;">추위를 많이 타는 사람</p>
+            </div>
+          </div> 
+        </div>
+      </div>
+    <!-------------manager contents------------->
+
+    <!-------------user contents---------------->
+    <div class="album py-5 bg-light">
+      <div class="container" style="padding-top:50px; font-family: 'netmarbleL';">
+      <a href="{%url 'create'%}"><button type="button" class="btn btn-light" style="border:medium solid #dbe2c7; display:inline-block;">글쓰기</button></a>
+      <p style="display:inline-block; padding-left:420px; font-size:30px;">#OOTD</p>
+      </div>
+      <div class="container" style="padding-top:10px;">
+        <div class="row">
+          {%for ootd in ootdapps.all%}
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <a href="{%url 'detail' ootd.id%}"><img class="card-img" src="{{ootd.image.url}}" height=350 weight=450></a>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+      </div>
+    </div>
+    <!-------------user contents---------------->
+
+    <footer>
+      <div class="wrapper" style="background: rgb(71, 116, 162); text-align: center; padding: 26px 0;">
+          <p style="font-family: netmarbleL; color:#fff; font-size:0.875rem;"><small>&copy; 2020 오늘뭐입지? #ootd</small></p>
+      </div>
+  </footer>
+</body>
+</html>

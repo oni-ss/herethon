@@ -1,0 +1,86 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title>OOTD</title>
+        <meta name="description">
+        <link rel="icon" type="image/png" href="logo.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            @font-face { font-family: 'netmarbleB'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff') format('woff'); font-weight: normal; font-style: normal; }
+            @font-face { font-family: 'netmarbleL'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleL.woff') format('woff'); font-weight: normal; font-style: normal; }
+        </style>
+
+    <!-- CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Philosopher" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'style.css'%}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <!-------------navbar------------->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <a class="navbar-brand" href="{%url 'main'%}" style="font-family: netmarbleB;">오늘뭐입지? :OOTD</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText" style="font-family: netmarbleL;">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{%url 'main'%}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">City</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">My page</a>
+            </li>
+
+          </ul>
+          <ul class="navbar-nav mr-auto" style="padding-left:70%;">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <p>{{user.username}}</p>
+              <form action="logout/" method="POST">
+                {% csrf_token %}
+              <input type="submit" value="Log out">
+              </form>
+            </li>
+          {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log in</a>
+            </li>
+          {% endif %}
+          </ul>
+        </div>
+    </nav>
+    <!-------------navbar------------->
+
+        <div class="news-contents wrapper" style="font-family: netmarbleL; margin-top:50px;">
+            <article>
+                <img src="{{ootds.image.url}}">
+            </article>
+            <aside>
+                <h3 class="sub-title">{{ootds.title}}</h3>
+                
+                <p>{{ootds.pub_date}}</p>
+                <div class="comment">
+                    <p>{{ootds.body|linebreaksbr}}</p>
+                </div>
+            </aside>
+        </div>
+
+        <footer>
+            <div class="wrapper">
+                <p style="font-family: netmarbleL;"><small>&copy; 2020 오늘뭐입지? #ootd</small></p>
+            </div>
+        </footer>
+    </body>
+</html>
